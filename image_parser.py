@@ -4,6 +4,7 @@ import pytesseract
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
 def getItemListFromImage(img):
+    img = img[200:950, 80:1380] #Crop Image
     img = maskImage(img)
     collection = pytesseract.image_to_string(img)
 

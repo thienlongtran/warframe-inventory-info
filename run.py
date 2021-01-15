@@ -1,8 +1,23 @@
 import cv2
-import pytesseract
+import pyautogui
+import numpy
+from pynput import keyboard
 import image_parser
 
-pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
+def execute():
+    img = numpy.array(pyautogui.screenshot())
+    print(image_parser.getItemListFromImage(img))
 
-img = cv2.imread("./test_image/pic4.png")
-print(image_parser.getItemListFromImage(img))
+def on_press(key):
+    print('{0} pressed'.format(key))
+    if key == keyboard.Key.print_screen:
+        execute()
+
+def on_release(key):
+    print('{0} released'.format(key))
+    if key == keyboard.Key.esc:
+        # Stop listener
+        return False
+
+with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+    listener.join()
