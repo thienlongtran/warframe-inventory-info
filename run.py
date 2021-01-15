@@ -5,7 +5,7 @@ from pynput import keyboard
 import image_parser
 
 def execute():
-    img = numpy.array(pyautogui.screenshot())
+    img = cv2.cvtColor(numpy.array(pyautogui.screenshot()),cv2.COLOR_RGB2BGR)
     print(image_parser.getItemListFromImage(img))
 
 def on_press(key):
