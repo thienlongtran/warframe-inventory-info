@@ -3,7 +3,7 @@ import pytesseract
 
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
-def getItemListFromImage(img):
+def getItemListFromImage(img, item_list):
     img = cropImage(img)
     img = maskImage(img)
     collection = pytesseract.image_to_string(img)
@@ -11,6 +11,7 @@ def getItemListFromImage(img):
     collection = collection.split("\n\n") #Seperate items by empty newline
     for i in range(len(collection)):
         collection[i] = collection[i].replace("\n", " ")
+        item_list.add(collection[i])
 
     return collection
 
