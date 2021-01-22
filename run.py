@@ -20,6 +20,6 @@ def on_release(key):
         print(item_list)
         return False
 
-item_list = {""}
+item_list = []
 with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()

@@ -6,17 +6,9 @@ pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesse
 def getItemListFromImage(img, item_list):
     img = cropImage(img)
     img = maskImage(img)
-    isolateItems(img)
-    collection = pytesseract.image_to_string(img)
-    collection = beautifyTesseractResults(collection, item_list)
-    return collection
-
-def beautifyTesseractResults(collection, item_list):
-    collection = collection.split("\n\n") #Seperate items by empty newline
-    for i in range(len(collection)):
-        collection[i] = collection[i].replace("\n", " ")
-        item_list.add(collection[i])
-    return collection
+    item_images = isolateItems(img)
+    readImages(item_images,item_list)
+    beautifyTesseractResults(item_list)
 
 def maskImage(img):
     """
@@ -52,3 +44,14 @@ def isolateItems(img):
             images.append(img[y1:y2, x1:x2])
     
     return images
+
+def readImages(item_images, item_list):
+    for i in range(len(item_images)):
+        text_result = pytesseract.image_to_string(item_images[i])
+        item_list.append(text_result)
+
+
+def beautifyTesseractResults(item_list):
+    for i in range(len(item_list)):
+        item_list[i] = item_list[i].replace("\n", " ")
+        item_list[i] = item_list[i].replace("\x08c", "")
