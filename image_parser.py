@@ -7,12 +7,14 @@ def getItemListFromImage(img, item_list):
     img = cropImage(img)
     img = maskImage(img)
     collection = pytesseract.image_to_string(img)
+    collection = beautifyTesseractResults(collection, item_list)
+    return collection
 
+def beautifyTesseractResults(collection, item_list):
     collection = collection.split("\n\n") #Seperate items by empty newline
     for i in range(len(collection)):
         collection[i] = collection[i].replace("\n", " ")
         item_list.add(collection[i])
-
     return collection
 
 def maskImage(img):
