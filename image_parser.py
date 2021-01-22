@@ -6,6 +6,7 @@ pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesse
 def getItemListFromImage(img, item_list):
     img = cropImage(img)
     img = maskImage(img)
+    isolateItems(img)
     collection = pytesseract.image_to_string(img)
     collection = beautifyTesseractResults(collection, item_list)
     return collection
@@ -32,3 +33,22 @@ def maskImage(img):
 def cropImage(img):
     img = img[200:950, 80:1380]
     return img
+
+def isolateItems(img):
+    """
+    Split the contents of a cropped Warframe inventory section into individual items.
+    Seperate items assuming that inventory is in a 7x4 template.
+    Returns a collection of individual images of each item.
+    """
+    images = []
+    height, width = img.shape
+
+    for i in range(7):
+        for j in range(4):
+            x1 = (int)((i/7) * width)
+            x2 = (int)(((i+1)/7) * width)
+            y1 = (int)((j/4) * height)
+            y2 = (int)(((j+1)/4) * height)
+            images.append(img[y1:y2, x1:x2])
+    
+    return images
