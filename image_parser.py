@@ -1,5 +1,6 @@
 import cv2
 import pytesseract
+import re
 
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
@@ -54,4 +55,5 @@ def readImages(item_images, item_list):
 def beautifyTesseractResults(item_list):
     for i in range(len(item_list)):
         item_list[i] = item_list[i].replace("\n", " ")
-        item_list[i] = item_list[i].replace("\x08c", "")
+        item_list[i] = re.sub("\x0c","",item_list[i]) #Remove Page Breaks
+        item_list[i] = item_list[i].strip() #Remove Trailing Spaces

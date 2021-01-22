@@ -17,7 +17,7 @@ def on_release(key):
     print('{0} released'.format(key))
     if key == keyboard.Key.esc:
         # Stop listener
-        print(item_list)
+        print(list((filter(None,item_list))))
         return False
 
 item_list = []
