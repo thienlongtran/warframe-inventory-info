@@ -2,3 +2,4 @@ tesseract-ocr
 pytesseract
 pynput
 pyautogui
+opencv-python
