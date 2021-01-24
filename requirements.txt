@@ -3,3 +3,4 @@ pytesseract
 pynput
 pyautogui
 opencv-python
+openpyxl
