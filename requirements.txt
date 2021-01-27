@@ -4,3 +4,4 @@ pynput
 pyautogui
 opencv-python
 openpyxl
+requests
