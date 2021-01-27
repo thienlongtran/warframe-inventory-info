@@ -14,7 +14,7 @@ def getAveragePlatPrice(item_name):
     Returns the average platinum market price of the item.
     """
 
-    avg_price = 0
+    avg_price = -1
     item_name = clean(item_name)
     item_info = requests.get(API + item_name.replace(" ", "_") + "/statistics").json()
     
@@ -22,9 +22,26 @@ def getAveragePlatPrice(item_name):
         avg_price = item_info["payload"]["statistics_closed"]["48hours"][0]['avg_price']
 
     except KeyError:
-        print(item_name + " is not a valid item.")
+        print(item_name + " is not listed on warframe.market.")
     
     return avg_price
+
+def getDucatPrice(item_name):
+    """
+    Returns the ducat price of the item.
+    """
+
+    ducat_price = -1
+    item_name = clean(item_name).title().replace("_", " ")
+    ducat_list = requests.get("https://s3.us-east-2.amazonaws.com/www.jsourdough.com/ItemsAndDucats.json").json()
+
+    try: 
+        ducat_price = ducat_list["itemsDucat"][item_name]
+
+    except KeyError:
+        print(item_name + " does not have a ducat value.")
+
+    return ducat_price
 
 def clean(item_name):
     """
