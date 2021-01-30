@@ -11,7 +11,13 @@ warframes_list = ["Ash" , "Atlas" , "Banshee" , "Baruuk" , "Chroma" , "Ember" , 
 
 def getAveragePlatPrice(item_name):
     """
-    Returns the average platinum market price of the item.
+    Get the current average price of the item on the Warframe marketplace.
+
+    Args:
+        item_name (str): The name of the item.
+
+    Returns:
+        float: the average platinum market price of the item.
     """
 
     avg_price = -1
@@ -28,11 +34,20 @@ def getAveragePlatPrice(item_name):
 
 def getDucatPrice(item_name):
     """
-    Returns the ducat price of the item.
+    Get the current Ducat price of the item for Baro Ki'Teer ingame trading.
+
+    Args:
+        item_name (str): The name of the item.
+
+    Returns:
+        float: The ducat price of the item.
     """
 
     ducat_price = -1
     item_name = clean(item_name).title().replace("_", " ")
+
+    #List of the Ducat values as JSON.
+    #Credit: Jonathan Sourdough (https://github.com/JonathanSourdough)
     ducat_list = requests.get("https://s3.us-east-2.amazonaws.com/www.jsourdough.com/ItemsAndDucats.json").json()
 
     try: 
@@ -45,7 +60,13 @@ def getDucatPrice(item_name):
 
 def clean(item_name):
     """
-    Returns a cleaned version of the item name for use in API.
+    Convert the name of the item into one that's usable for the warframe.market API
+
+    Args:
+        item_name (str): The name of the item.
+
+    Returns:
+        str: A cleaned version of the item name usable with the warframe.market API.
     """
     if item_name.split()[0] in warframes_list and item_name.split()[len(item_name.split())-2] != "Prime" and item_name.split()[len(item_name.split())-1] == "Blueprint":
         item_name = item_name.replace(" Blueprint", "")
