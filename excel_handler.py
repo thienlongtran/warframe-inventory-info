@@ -2,6 +2,12 @@ from openpyxl import Workbook
 import warframe_market_script
 
 def itemListToExcel(item_list):
+    """
+    Saves the item list and corresponding Platinum and Ducat prices of each item to an external Excel file.
+
+    Args:
+        item_list (list): A list of Warframe items.
+    """
     wb = Workbook()
     ws = wb.active
 
