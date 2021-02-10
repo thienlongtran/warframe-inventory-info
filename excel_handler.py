@@ -71,7 +71,9 @@ def fillItemPlatDucatEfficiencyRatio(item_list, ws):
 
     Args:
         item_list (list): A list of Warframe items.
+        
         ws (worksheet): Current active worksheet to save results in.
+            IMPORTANT!!! - Platinum and Ducat column must first be filled in column B and C respectively.
 
     Returns:
         no value (function saves results directly to active worksheet)
